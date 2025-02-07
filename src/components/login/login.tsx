@@ -1,43 +1,74 @@
 import { useState } from "react";
+import { useAuth } from "../providers/auth-provider/useAuth";
+import { TUser } from "../../type";
+import styles from "./login.module.css";
 
 export function Login(): JSX.Element {
-  const [formData, setFormData] = useState({ login: "", token: "" });
+  const { login } = useAuth();
+  const [formData, setFormData] = useState<TUser>({
+    user: { login: "", token: "" },
+  });
+
+  const { user } = formData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        [e.target.name]: e.target.value,
+      },
+    }));
+  };
+
+  const isUserValid = ({ user }: TUser) => {
+    if (!user.login || !user.token) {
+      throw new Error("Unable to set user data, some info might be missing");
+    }
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.login && formData.token) {
-      console.log(formData);
-      setFormData({ login: "", token: "" });
+    try {
+      if (isUserValid(formData)) {
+        login(formData);
+        setFormData({ user: { login: "", token: "" } });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        alert(error.message);
+      } else {
+        console.error("An unexpected error occurred", error);
+        alert("Oops, something went wrong");
+      }
     }
   };
 
   return (
-    <div className="login__container">
-      <h2 className="title">Введи данные инстанса</h2>
-      <form onSubmit={handleSubmit} className="login__form">
+    <div className={styles.login__container}>
+      <h2 className={styles.title}>Введи данные инстанса</h2>
+      <form onSubmit={handleSubmit} className={styles.login__form}>
         <input
-          className="login"
+          className={styles.form__input}
           type="text"
           name="login"
           placeholder="idInstance"
-          value={formData.login}
+          value={user.login}
           onChange={handleChange}
           required
         />
         <input
-          className="token"
+          className={styles.form__input}
           type="text"
           name="token"
           placeholder="token"
-          value={formData.token}
+          value={user.token}
           onChange={handleChange}
           required
         />
-        <button className="entry" type="submit">
+        <button className={styles.entry} type="submit">
           Войти
         </button>
       </form>

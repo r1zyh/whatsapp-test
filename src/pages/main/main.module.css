@@ -1,29 +1,19 @@
-.login__container {
+.main__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     background-color: #e5ddd5;
-}
+  }
   
-.login__form {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-  
-.title {
-    font-size: 1.5em;
+  .title {
+    font-size: 20px;
+    margin-bottom: 10px;
     color: #075e54;
-    margin-bottom: 15px;
-    text-align: center;
-}
+  }
   
-.form__input {
+  .phone__input {
     width: 250px;
     padding: 10px;
     font-size: 16px;
@@ -31,10 +21,10 @@
     border-radius: 5px;
     margin-bottom: 10px;
     outline: none;
-}
+  }
   
-.entry {
-    width: 100%;
+  .open__chat {
+    width: 250px;
     padding: 10px;
     font-size: 16px;
     color: white;
@@ -42,9 +32,9 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
+  }
   
-.entry:hover {
+  .open__chat:hover {
     background-color: #075e54;
-}
+  }
   
