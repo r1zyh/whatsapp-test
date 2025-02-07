@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppRoute } from "../../const";
-import { Main } from "../../pages/main/main";
-import { Chat } from "../../pages/chat/chat";
-import { AuthProvider } from "../providers/auth-provider/auth-provider";
+import { AuthProvider } from "@components/providers/auth-provider/auth-provider";
+import { Main } from "@pages/main/main";
+import { Chat } from "@pages/chat/chat";
 
 export default function App() {
   return (

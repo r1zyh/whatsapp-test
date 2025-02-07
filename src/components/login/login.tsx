@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../providers/auth-provider/useAuth";
+import { useAuth } from "@components/providers/auth-provider/useAuth";
 import { TUser } from "../../type";
 import styles from "./login.module.css";
 

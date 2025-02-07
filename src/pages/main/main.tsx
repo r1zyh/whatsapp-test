@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Login } from "../../components/login/login";
-import { useAuth } from "../../components/providers/auth-provider/useAuth";
+import { Login } from "@components/login/login";
+import { useAuth } from "@components/providers/auth-provider/useAuth";
 import styles from "./main.module.css";
 
 export function Main(): JSX.Element {
