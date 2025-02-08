@@ -2,18 +2,13 @@ import { sendMessage } from "@/api/send-message";
 import { useChat } from "@/components/providers/chat-provider/useChat";
 import { useAuth } from "@components/providers/auth-provider/useAuth";
 import { useState } from "react";
-
-type TMessage = {
-  id: string;
-  //sender: string;
-  text: string;
-};
+import styles from "./chat.module.css";
 
 export function Chat() {
   const [message, setMessage] = useState("");
-  const [allMessages, setAllMessages] = useState<TMessage[]>([]);
   const { user, phone } = useAuth();
-  const { dispatch } = useChat();
+  const { state, dispatch } = useChat();
+  console.log(state.messages);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -23,29 +18,27 @@ export function Chat() {
     if (!user) {
       return;
     }
-    const newMessage: TMessage = {
-      id: Date.now().toString(),
-      text: message,
-    };
     sendMessage(dispatch, user, +phone, message);
-    setAllMessages((prev) => [...prev, newMessage]);
     setMessage("");
   };
   return (
-    <div className="chat__container">
-      <h2>Chat Template</h2>
+    <div className={styles.chat__container}>
+      <h2 className={styles.title}>WhatsApp Green-Api</h2>
 
-      <div className="message__container">
-        <ul className="message__list">
-          {allMessages.map((allMessage) => (
-            <li className="message__list--item" key={allMessage.id}>
-              {allMessage.text}
+      <div className={styles.message__container}>
+        <ul className={styles.message__list}>
+          {state.messages.map((message, index) => (
+            <li
+              className={`${styles["message__list--item"]} ${styles.received}`}
+              key={`${message.chatId}-${index}`} //вернуться к этому
+            >
+              {message.message}
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="message__input">
+      <div className={styles.message__input}>
         <input
           type="text"
           placeholder="Поприветствуйте своего собеседника!"
