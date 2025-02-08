@@ -6,23 +6,20 @@ import styles from "./login.module.css";
 export function Login(): JSX.Element {
   const { login } = useAuth();
   const [formData, setFormData] = useState<TUser>({
-    user: { login: "", token: "" },
+    login: "",
+    token: "",
   });
-
-  const { user } = formData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
-      user: {
-        ...prev.user,
-        [e.target.name]: e.target.value,
-      },
+      [e.target.name]: e.target.value,
     }));
   };
+  
 
-  const isUserValid = ({ user }: TUser) => {
-    if (!user.login || !user.token) {
+  const isUserValid = ({ login, token }: TUser) => {
+    if (!login || !token) {
       throw new Error("Unable to set user data, some info might be missing");
     }
     return true;
@@ -33,8 +30,9 @@ export function Login(): JSX.Element {
     try {
       if (isUserValid(formData)) {
         login(formData);
-        setFormData({ user: { login: "", token: "" } });
+        setFormData({ login: "", token: "" });
       }
+      console.log(formData);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -55,7 +53,7 @@ export function Login(): JSX.Element {
           type="text"
           name="login"
           placeholder="idInstance"
-          value={user.login}
+          value={formData.login}
           onChange={handleChange}
           required
         />
@@ -64,7 +62,7 @@ export function Login(): JSX.Element {
           type="text"
           name="token"
           placeholder="token"
-          value={user.token}
+          value={formData.token}
           onChange={handleChange}
           required
         />

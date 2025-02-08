@@ -2,17 +2,26 @@ import { useState } from "react";
 import { Login } from "@components/login/login";
 import { useAuth } from "@components/providers/auth-provider/useAuth";
 import styles from "./main.module.css";
+import { useNavigate } from "react-router-dom";
+import { AppRoute } from "@/const";
 
 export function Main(): JSX.Element {
-  const { isLogged } = useAuth();
+  const { isLogged, handleSetPhone } = useAuth();
   const [phoneNumber, setPhoneNumber] = useState("");
+  const navigate = useNavigate();
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
   };
 
   const handleOpenChatClick = () => {
-    console.log(phoneNumber);
+    if (isNaN(+phoneNumber)) {
+      alert("wrong number");
+      setPhoneNumber("");
+      throw new Error("The phone number must consist of digits only");
+    }
+    handleSetPhone(phoneNumber);
+    navigate(AppRoute.Chat);
   };
   return (
     <div className={styles.main__container}>
@@ -23,7 +32,8 @@ export function Main(): JSX.Element {
           <h2 className={styles.title}>Введите номер собеседника</h2>
           <input
             type="text"
-            placeholder="номер телефона"
+            placeholder="номер телефона без знаков"
+            minLength={11}
             value={phoneNumber}
             onChange={handlePhoneChange}
             className={styles.phone__input}
