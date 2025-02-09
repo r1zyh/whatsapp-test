@@ -11,7 +11,6 @@ export const receiveMessage = async (
   state: TChatState
 ) => {
   if (state.isLoading) {
-    console.log("request(pending)...");
     return;
   }
 

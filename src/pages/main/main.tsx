@@ -20,7 +20,8 @@ export function Main(): JSX.Element {
       setPhoneNumber("");
       throw new Error("The phone number must consist of digits only");
     }
-    handleSetPhone(phoneNumber);
+    const finalPhone = phoneNumber.startsWith("8") ? "7" + phoneNumber.slice(1) : phoneNumber;
+    handleSetPhone(finalPhone);
     navigate(AppRoute.Chat);
   };
 
