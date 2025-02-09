@@ -62,7 +62,7 @@ export function Login(): JSX.Element {
         />
         <input
           className={styles.form__input}
-          type="password"
+          type="text"
           name="token"
           placeholder="token"
           value={formData.token}

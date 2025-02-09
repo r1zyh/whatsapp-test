@@ -10,7 +10,7 @@ export const deleteNotification = async (
 ) => {
   try {
     const response = await fetch(
-      `{${apiUrl}}/waInstance{${user.login}}/deleteNotification/{${user.token}}/{${receiptId}}`,
+      `${apiUrl}/waInstance${user.login}/deleteNotification/${user.token}/${receiptId}`,
       { method: "DELETE" }
     );
 

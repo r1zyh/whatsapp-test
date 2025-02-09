@@ -1,14 +1,27 @@
 import { sendMessage } from "@/api/send-message";
 import { useChat } from "@/components/providers/chat-provider/useChat";
 import { useAuth } from "@components/providers/auth-provider/useAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./chat.module.css";
+import { receiveMessage } from "@/api/receive-notification";
+import { getClassForSender } from "./getSenderStatus";
 
 export function Chat() {
   const [message, setMessage] = useState("");
   const { user, phone } = useAuth();
   const { state, dispatch } = useChat();
   console.log(state.messages);
+  console.log(state.notifications);
+  
+  useEffect(() => {
+    if (user) {
+      const timeout = 5000;
+      const fetchNotifications = async () => {
+        await receiveMessage(user, timeout, dispatch, state);
+      };
+      fetchNotifications();
+    }
+  }, [user, dispatch, state]);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -29,7 +42,7 @@ export function Chat() {
         <ul className={styles.message__list}>
           {state.messages.map((message, index) => (
             <li
-              className={`${styles["message__list--item"]} ${styles.received}`}
+              className={`${styles["message__list--item"]} ${getClassForSender(message.sender, phone)}`}
               key={`${message.chatId}-${index}`} //вернуться к этому
             >
               {message.message}

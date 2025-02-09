@@ -1,9 +1,10 @@
 export type TMessage = {
   chatId: string;
   message: string;
+  sender?: string;
 };
 
-type TNotification = {
+export type TNotification = {
   receiptId: number;
   body: {
     typeWebhook: string;
@@ -36,9 +37,12 @@ type TDeleteNotification = {
 export type TChatState = {
   messages: TMessage[];
   notifications: TNotification[];
+  isLoading: boolean;
 };
 
 export type TChatAction =
   | { type: "SEND_MESSAGE"; payload: TMessage }
   | { type: "RECEIVE_NOTIFICATION"; payload: TNotification }
-  | { type: "DELETE_NOTIFICATION"; payload: TDeleteNotification };
+  | { type: "DELETE_NOTIFICATION"; payload: TDeleteNotification }
+  | { type: "SET_LOADING"; payload: boolean }
+  | { type: "SAVE_MESSAGE_FROM_NOTIFICATION"; payload: TNotification };

@@ -11,6 +11,7 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(chatReducer, {
     messages: [],
     notifications: [],
+    isLoading: false,
   });
 
   return (

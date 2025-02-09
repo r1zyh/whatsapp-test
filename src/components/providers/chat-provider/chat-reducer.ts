@@ -15,7 +15,16 @@ export const chatReducer = (
         ...state,
         notifications: [...state.notifications, action.payload],
       };
+    case "SAVE_MESSAGE_FROM_NOTIFICATION": {
+      const { textMessage } = action.payload.body.messageData.textMessageData;
+      const { chatId } = action.payload.body.senderData;
+      const { sender } = action.payload.body.senderData;
 
+      return {
+        ...state,
+        messages: [...state.messages, { chatId, message: textMessage, sender }],
+      };
+    }
     case "DELETE_NOTIFICATION":
       return {
         ...state,
@@ -23,7 +32,11 @@ export const chatReducer = (
           (notification) => notification.receiptId !== action.payload.receiptId
         ),
       };
-
+    case "SET_LOADING":
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
     default:
       return state;
   }
