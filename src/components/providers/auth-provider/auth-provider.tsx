@@ -3,7 +3,7 @@ import { TUser } from "../../../type";
 
 type TAuthContext = {
   user: TUser | null;
-  login: (user: TUser) => void;
+  login: (user: TUser | null) => void;
   isLogged: boolean;
   phone: string;
   handleSetPhone: (value: string) => void;
@@ -24,9 +24,14 @@ export function AuthProvider({ children }: TAuthProviderProps) {
     setPhone(value);
   };
 
-  const login = (user: TUser) => {
-    setUser(user);
-    setIsLogged(true);
+  const login = (user: TUser | null) => {
+    if (!user || user === null) {
+      setUser(null);
+      setIsLogged(false);
+    } else {
+      setUser(user);
+      setIsLogged(true);
+    }
   };
 
   return (

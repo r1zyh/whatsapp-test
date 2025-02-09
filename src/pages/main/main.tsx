@@ -23,6 +23,7 @@ export function Main(): JSX.Element {
     handleSetPhone(phoneNumber);
     navigate(AppRoute.Chat);
   };
+
   return (
     <div className={styles.main__container}>
       {!isLogged ? (
@@ -36,7 +37,7 @@ export function Main(): JSX.Element {
             minLength={11}
             value={phoneNumber}
             onChange={handlePhoneChange}
-            onKeyDown={(e) => e.key === "Enter" && handleOpenChatClick()  }
+            onKeyDown={(e) => e.key === "Enter" && handleOpenChatClick()}
             className={styles.phone__input}
             required
           />
@@ -44,7 +45,7 @@ export function Main(): JSX.Element {
             Открыть чат
           </button>
         </>
-      )}  
+      )}
     </div>
   );
 }

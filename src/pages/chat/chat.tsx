@@ -4,6 +4,7 @@ import { useAuth } from "@components/providers/auth-provider/useAuth";
 import { useEffect, useState } from "react";
 import { receiveMessage } from "@/api/receive-notification";
 import { getClassForSender } from "./getSenderStatus";
+import { ErrorRedirect } from "@/components/error/error";
 import styles from "./chat.module.css";
 
 export function Chat() {
@@ -36,21 +37,23 @@ export function Chat() {
     <div className={styles.chat__container}>
       <h2 className={styles.title}>{`WhatsApp Green-Api +${phone}`}</h2>
 
-      <div className={styles.message__container}>
-        <ul className={styles.message__list}>
-          {state.messages.map((message, index) => (
-            <li
-              className={`${styles["message__list--item"]} ${getClassForSender(
-                message.sender,
-                phone
-              )}`}
-              key={`${message.chatId}-${index}`} //вернуться к этому
-            >
-              {message.message}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {state.isError && <ErrorRedirect />}
+      {!state.isError && (
+        <div className={styles.message__container}>
+          <ul className={styles.message__list}>
+            {state.messages.map((message, index) => (
+              <li
+                className={`${
+                  styles["message__list--item"]
+                } ${getClassForSender(message.sender, phone)}`}
+                key={`${message.chatId}-${index}`}
+              >
+                {message.message}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className={styles.message__input}>
         <input
