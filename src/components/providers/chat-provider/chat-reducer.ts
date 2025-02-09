@@ -20,11 +20,26 @@ export const chatReducer = (
       const { chatId } = action.payload.body.senderData;
       const { sender } = action.payload.body.senderData;
 
-      return {
-        ...state,
-        messages: [...state.messages, { chatId, message: textMessage, sender }],
-      };
+      const isMessageExist = state.messages.some(
+        (msg) =>
+          msg.chatId === chatId &&
+          msg.sender === sender &&
+          msg.message === textMessage
+      );
+
+      if (!isMessageExist) {
+        return {
+          ...state,
+          messages: [
+            ...state.messages,
+            { chatId, message: textMessage, sender },
+          ],
+        };
+      }
+
+      return state;
     }
+
     case "DELETE_NOTIFICATION":
       return {
         ...state,

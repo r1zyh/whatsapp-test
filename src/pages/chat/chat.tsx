@@ -10,9 +10,7 @@ export function Chat() {
   const [message, setMessage] = useState("");
   const { user, phone } = useAuth();
   const { state, dispatch } = useChat();
-  console.log(state.messages);
-  console.log(state.notifications);
-  
+
   useEffect(() => {
     if (user) {
       const timeout = 5000;
@@ -42,7 +40,10 @@ export function Chat() {
         <ul className={styles.message__list}>
           {state.messages.map((message, index) => (
             <li
-              className={`${styles["message__list--item"]} ${getClassForSender(message.sender, phone)}`}
+              className={`${styles["message__list--item"]} ${getClassForSender(
+                message.sender,
+                phone
+              )}`}
               key={`${message.chatId}-${index}`} //вернуться к этому
             >
               {message.message}
