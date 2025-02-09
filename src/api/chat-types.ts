@@ -38,6 +38,7 @@ export type TChatState = {
   messages: TMessage[];
   notifications: TNotification[];
   isLoading: boolean;
+  isError: boolean;
 };
 
 export type TChatAction =
@@ -45,4 +46,5 @@ export type TChatAction =
   | { type: "RECEIVE_NOTIFICATION"; payload: TNotification }
   | { type: "DELETE_NOTIFICATION"; payload: TDeleteNotification }
   | { type: "SET_LOADING"; payload: boolean }
+  | { type: "SET_ERROR"; payload: boolean }
   | { type: "SAVE_MESSAGE_FROM_NOTIFICATION"; payload: TNotification };

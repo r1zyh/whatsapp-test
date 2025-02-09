@@ -2,9 +2,9 @@ import { sendMessage } from "@/api/send-message";
 import { useChat } from "@/components/providers/chat-provider/useChat";
 import { useAuth } from "@components/providers/auth-provider/useAuth";
 import { useEffect, useState } from "react";
-import styles from "./chat.module.css";
 import { receiveMessage } from "@/api/receive-notification";
 import { getClassForSender } from "./getSenderStatus";
+import styles from "./chat.module.css";
 
 export function Chat() {
   const [message, setMessage] = useState("");
@@ -12,14 +12,14 @@ export function Chat() {
   const { state, dispatch } = useChat();
 
   useEffect(() => {
-    if (user) {
+    if (user && !state.isError) {
       const timeout = 5000;
       const fetchNotifications = async () => {
         await receiveMessage(user, timeout, dispatch, state);
       };
       fetchNotifications();
     }
-  }, [user, dispatch, state]);
+  }, [user, dispatch, state, state.isError]);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);

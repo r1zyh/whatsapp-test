@@ -23,7 +23,9 @@ export const receiveMessage = async (
     );
 
     if (!response.ok) {
-      console.error("Ошибка при получении уведомлений", response.status);
+      console.error("Unable to fetch Notifications", response.status);
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({ type: "SET_ERROR", payload: true });
       return;
     }
     const data: TNotification | null = await response.json();
@@ -37,13 +39,9 @@ export const receiveMessage = async (
       console.warn("Incoming data is null or undefined");
     }
   } catch (error) {
-    if (error instanceof Error) {
-      alert(error.message);
-      console.error(error.message);
-    } else {
-      alert("Oops, something went wrong");
-      console.error("An unexpected error occurred", error);
-    }
+    dispatch({ type: "SET_ERROR", payload: true });
+    console.error(error);
+    throw new Error("Something went wrong while fetching Notifications");
   } finally {
     dispatch({ type: "SET_LOADING", payload: false });
   }

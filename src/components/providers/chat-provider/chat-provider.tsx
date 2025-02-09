@@ -12,6 +12,7 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
     messages: [],
     notifications: [],
     isLoading: false,
+    isError: false,
   });
 
   return (
