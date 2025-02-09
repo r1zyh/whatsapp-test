@@ -16,7 +16,6 @@ export function Login(): JSX.Element {
       [e.target.name]: e.target.value,
     }));
   };
-  
 
   const isUserValid = ({ login, token }: TUser) => {
     if (!login || !token) {
@@ -47,7 +46,11 @@ export function Login(): JSX.Element {
   return (
     <div className={styles.login__container}>
       <h2 className={styles.title}>Введи данные инстанса</h2>
-      <form onSubmit={handleSubmit} className={styles.login__form}>
+      <form
+        onSubmit={handleSubmit}
+        onKeyDown={(e) => e.key === "Enter" && handleSubmit}
+        className={styles.login__form}
+      >
         <input
           className={styles.form__input}
           type="text"
@@ -59,7 +62,7 @@ export function Login(): JSX.Element {
         />
         <input
           className={styles.form__input}
-          type="text"
+          type="password"
           name="token"
           placeholder="token"
           value={formData.token}

@@ -21,11 +21,11 @@ export const receiveMessage = async (
     dispatch({ type: "RECEIVE_NOTIFICATION", payload: data });
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
       alert(error.message);
+      console.error(error.message);
     } else {
-      console.error("An unexpected error occurred", error);
       alert("Oops, something went wrong");
+      console.error("An unexpected error occurred", error);
     }
   }
 };

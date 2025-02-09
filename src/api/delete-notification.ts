@@ -8,10 +8,17 @@ export const deleteNotification = async (
   dispatch: Dispatch<TChatAction>,
   receiptId: number
 ) => {
-  await fetch(
-    `{${apiUrl}}/waInstance{${user.login}}/deleteNotification/{${user.token}}/{${receiptId}}`,
-    { method: "DELETE" }
-  );
+  try {
+    const response = await fetch(
+      `{${apiUrl}}/waInstance{${user.login}}/deleteNotification/{${user.token}}/{${receiptId}}`,
+      { method: "DELETE" }
+    );
 
-  dispatch({ type: "DELETE_NOTIFICATION", payload: { receiptId } });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+    dispatch({ type: "DELETE_NOTIFICATION", payload: { receiptId } });
+  } catch (error) {
+    console.error("Some bad network, failed to delete notification");
+  }
 };

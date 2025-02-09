@@ -23,7 +23,7 @@ export function Chat() {
   };
   return (
     <div className={styles.chat__container}>
-      <h2 className={styles.title}>WhatsApp Green-Api</h2>
+      <h2 className={styles.title}>{`WhatsApp Green-Api +${phone}`}</h2>
 
       <div className={styles.message__container}>
         <ul className={styles.message__list}>
@@ -44,6 +44,7 @@ export function Chat() {
           placeholder="Поприветствуйте своего собеседника!"
           value={message}
           onChange={handleMessageChange}
+          onKeyDown={(e) => e.key === "Enter" && handleSubmitClick()}
         />
         <button onClick={handleSubmitClick}>Отправить</button>
       </div>

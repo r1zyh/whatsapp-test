@@ -14,17 +14,25 @@ export const sendMessage = async (
     message: text,
   };
 
-  dispatch({ type: "SEND_MESSAGE", payload: message });
-
-  await fetch(
-   `${apiUrl}/waInstance${user.login}/sendMessage/${user.token}`,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        chatId: `${phoneNumber}@c.us`,
-        message: text,
-      }),
-      headers: { "Content-Type": "application/json" },
+  try {
+    const response = await fetch(
+      `${apiUrl}/waInstance${user.login}/sendMessage/${user.token}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          chatId: `${phoneNumber}@c.us`,
+          message: text,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
-  );
+
+    dispatch({ type: "SEND_MESSAGE", payload: message });
+  } catch (error) {
+    alert('Oops, something went wrong')
+    console.error("Some bad network, message was not delivered");
+  }
 };

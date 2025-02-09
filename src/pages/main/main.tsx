@@ -15,8 +15,8 @@ export function Main(): JSX.Element {
   };
 
   const handleOpenChatClick = () => {
-    if (isNaN(+phoneNumber)) {
-      alert("wrong number");
+    if (isNaN(+phoneNumber) || !phoneNumber) {
+      alert("please try again");
       setPhoneNumber("");
       throw new Error("The phone number must consist of digits only");
     }
@@ -36,6 +36,7 @@ export function Main(): JSX.Element {
             minLength={11}
             value={phoneNumber}
             onChange={handlePhoneChange}
+            onKeyDown={(e) => e.key === "Enter" && handleOpenChatClick()  }
             className={styles.phone__input}
             required
           />
@@ -43,7 +44,7 @@ export function Main(): JSX.Element {
             Открыть чат
           </button>
         </>
-      )}
+      )}  
     </div>
   );
 }
