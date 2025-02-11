@@ -6,7 +6,8 @@ type TAuthContext = {
   login: (user: TUser | null) => void;
   isLogged: boolean;
   phone: string;
-  handleSetPhone: (value: string) => void;
+  myPhone: string;
+  handleSetPhone: (value1: string, value2: string) => void;
 };
 
 type TAuthProviderProps = {
@@ -19,9 +20,11 @@ export function AuthProvider({ children }: TAuthProviderProps) {
   const [user, setUser] = useState<TUser | null>(null);
   const [isLogged, setIsLogged] = useState(false);
   const [phone, setPhone] = useState("");
+  const [myPhone, setMyPhone] = useState("");
 
-  const handleSetPhone = (value: string) => {
-    setPhone(value);
+  const handleSetPhone = (value1: string, value2: string) => {
+    setPhone(value1);
+    setMyPhone(value2);
   };
 
   const login = (user: TUser | null) => {
@@ -36,7 +39,7 @@ export function AuthProvider({ children }: TAuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, isLogged, phone, handleSetPhone }}
+      value={{ user, login, isLogged, phone, myPhone, handleSetPhone }}
     >
       {children}
     </AuthContext.Provider>

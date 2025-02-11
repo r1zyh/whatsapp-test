@@ -34,7 +34,9 @@ export const receiveMessage = async (
 
       await deleteNotification(user, dispatch, data.receiptId);
     } else {
-      console.warn("Incoming data is null or undefined");
+      console.warn(
+        "Incoming data is null/undefined or incoming format is not supported yet"
+      );
     }
   } catch (error) {
     dispatch({ type: "SET_ERROR", payload: true });

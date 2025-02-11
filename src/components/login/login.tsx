@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "@components/providers/auth-provider/useAuth";
 import { TUser } from "../../type";
 import styles from "./login.module.css";
+import { isUserValid } from "@/util/helpers";
 
 export function Login(): JSX.Element {
   const { login } = useAuth();
@@ -18,12 +19,6 @@ export function Login(): JSX.Element {
     }));
   };
 
-  const isUserValid = ({ apiUrl, login, token }: TUser) => {
-    if (!login || !token || !apiUrl) {
-      throw new Error("Unable to set user data, some info might be missing");
-    }
-    return true;
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

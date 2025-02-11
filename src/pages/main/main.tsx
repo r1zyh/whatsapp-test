@@ -4,11 +4,17 @@ import { useAuth } from "@components/providers/auth-provider/useAuth";
 import styles from "./main.module.css";
 import { useNavigate } from "react-router-dom";
 import { AppRoute } from "@/const";
+import { formatPhoneNumber } from "@/util/helpers";
 
 export function Main(): JSX.Element {
   const { isLogged, handleSetPhone } = useAuth();
+  const [myPhoneNumber, setMyPhoneNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const navigate = useNavigate();
+  //По хорошему так нельзя, дублирование кода.
+  const handleMyPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMyPhoneNumber(e.target.value);
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
@@ -20,8 +26,10 @@ export function Main(): JSX.Element {
       setPhoneNumber("");
       throw new Error("The phone number must consist of digits only");
     }
-    const finalPhone = phoneNumber.startsWith("8") ? "7" + phoneNumber.slice(1) : phoneNumber;
-    handleSetPhone(finalPhone);
+    const finalPhoneMy = formatPhoneNumber(myPhoneNumber);
+    const finalPhone = formatPhoneNumber(phoneNumber);
+
+    handleSetPhone(finalPhone, finalPhoneMy);
     navigate(AppRoute.Chat);
   };
 
@@ -34,7 +42,17 @@ export function Main(): JSX.Element {
           <h2 className={styles.title}>Введите номер собеседника</h2>
           <input
             type="text"
-            placeholder="номер телефона без знаков"
+            placeholder="ваш номер без знаков"
+            minLength={11}
+            value={myPhoneNumber}
+            onChange={handleMyPhoneChange}
+            onKeyDown={(e) => e.key === "Enter" && handleOpenChatClick()}
+            className={styles.phone__input}
+            required
+          />
+          <input
+            type="text"
+            placeholder="номер собеседника без знаков"
             minLength={11}
             value={phoneNumber}
             onChange={handlePhoneChange}

@@ -9,7 +9,7 @@ import styles from "./chat.module.css";
 
 export function Chat() {
   const [message, setMessage] = useState("");
-  const { user, phone } = useAuth();
+  const { user, phone, myPhone } = useAuth();
   const { state, dispatch } = useChat();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function Chat() {
               <li
                 className={`${
                   styles["message__list--item"]
-                } ${getClassForSender(message.sender, phone)}`}
+                } ${getClassForSender(message.sender, myPhone)}`}
                 key={`${message.chatId}-${index}`}
               >
                 {message.message}
