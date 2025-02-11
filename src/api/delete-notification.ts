@@ -1,6 +1,5 @@
 import { Dispatch } from "react";
 import { TChatAction } from "./chat-types";
-import { apiUrl } from "@/const";
 import { TUser } from "@/type";
 
 export const deleteNotification = async (
@@ -10,7 +9,7 @@ export const deleteNotification = async (
 ) => {
   try {
     const response = await fetch(
-      `${apiUrl}/waInstance${user.login}/deleteNotification/${user.token}/${receiptId}`,
+      `${user.apiUrl}/waInstance${user.login}/deleteNotification/${user.token}/${receiptId}`,
       { method: "DELETE" }
     );
 

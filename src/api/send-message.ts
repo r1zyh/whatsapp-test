@@ -1,7 +1,6 @@
 import { Dispatch } from "react";
 import { TChatAction, TMessage } from "./chat-types";
 import { TUser } from "type";
-import { apiUrl } from "@/const";
 
 export const sendMessage = async (
   dispatch: Dispatch<TChatAction>,
@@ -16,7 +15,7 @@ export const sendMessage = async (
 
   try {
     const response = await fetch(
-      `${apiUrl}/waInstance${user.login}/sendMessage/${user.token}`,
+      `${user.apiUrl}/waInstance${user.login}/sendMessage/${user.token}`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -32,7 +31,7 @@ export const sendMessage = async (
 
     dispatch({ type: "SEND_MESSAGE", payload: message });
   } catch (error) {
-    alert('Oops, something went wrong')
+    alert("Oops, something went wrong");
     console.error("Some bad network, message was not delivered");
   }
 };

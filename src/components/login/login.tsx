@@ -6,6 +6,7 @@ import styles from "./login.module.css";
 export function Login(): JSX.Element {
   const { login } = useAuth();
   const [formData, setFormData] = useState<TUser>({
+    apiUrl: "",
     login: "",
     token: "",
   });
@@ -17,8 +18,8 @@ export function Login(): JSX.Element {
     }));
   };
 
-  const isUserValid = ({ login, token }: TUser) => {
-    if (!login || !token) {
+  const isUserValid = ({ apiUrl, login, token }: TUser) => {
+    if (!login || !token || !apiUrl) {
       throw new Error("Unable to set user data, some info might be missing");
     }
     return true;
@@ -29,7 +30,7 @@ export function Login(): JSX.Element {
     try {
       if (isUserValid(formData)) {
         login(formData);
-        setFormData({ login: "", token: "" });
+        setFormData({ apiUrl: "", login: "", token: "" });
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -50,6 +51,15 @@ export function Login(): JSX.Element {
         onKeyDown={(e) => e.key === "Enter" && handleSubmit}
         className={styles.login__form}
       >
+        <input
+          className={styles.form__input}
+          type="text"
+          name="apiUrl"
+          placeholder="apiUrl"
+          value={formData.apiUrl}
+          onChange={handleChange}
+          required
+        />
         <input
           className={styles.form__input}
           type="text"

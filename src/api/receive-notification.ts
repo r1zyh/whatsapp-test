@@ -1,7 +1,6 @@
 import { Dispatch } from "react";
 import { TChatAction, TChatState, TNotification } from "./chat-types";
 import { TUser } from "@/type";
-import { apiUrl } from "@/const";
 import { deleteNotification } from "./delete-notification";
 
 export const receiveMessage = async (
@@ -18,7 +17,7 @@ export const receiveMessage = async (
 
   try {
     const response = await fetch(
-      `${apiUrl}/waInstance${user.login}/receiveNotification/${user.token}?receiveTimeout=${timeout}`
+      `${user.apiUrl}/waInstance${user.login}/receiveNotification/${user.token}?receiveTimeout=${timeout}`
     );
 
     if (!response.ok) {
