@@ -31,7 +31,6 @@ export function Login(): JSX.Element {
         login(formData);
         setFormData({ login: "", token: "" });
       }
-      console.log(formData);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
