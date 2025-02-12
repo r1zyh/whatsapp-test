@@ -11,15 +11,17 @@ export function Main(): JSX.Element {
   const [myPhoneNumber, setMyPhoneNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const navigate = useNavigate();
-  //По хорошему так нельзя, дублирование кода.
-  const handleMyPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMyPhoneNumber(e.target.value);
-  };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+  const handlePhoneChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    option?: string
+  ) => {
+    if (option === "my") {
+      setMyPhoneNumber(e.target.value);
+    } else {
+      setPhoneNumber(e.target.value);
+    }
   };
-
   const handleOpenChatClick = () => {
     if (isNaN(+phoneNumber) || !phoneNumber) {
       alert("please try again");
@@ -45,7 +47,7 @@ export function Main(): JSX.Element {
             placeholder="ваш номер без знаков"
             minLength={11}
             value={myPhoneNumber}
-            onChange={handleMyPhoneChange}
+            onChange={(e) => handlePhoneChange(e, "my")}
             onKeyDown={(e) => e.key === "Enter" && handleOpenChatClick()}
             className={styles.phone__input}
             required

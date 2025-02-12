@@ -14,7 +14,7 @@ export function Chat() {
 
   useEffect(() => {
     if (user && !state.isError) {
-      const timeout = 5000;
+      const timeout = 7000;
       const fetchNotifications = async () => {
         await receiveMessage(user, timeout, dispatch, state);
       };

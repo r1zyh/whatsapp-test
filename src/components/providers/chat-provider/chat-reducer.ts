@@ -16,9 +16,10 @@ export const chatReducer = (
         notifications: [...state.notifications, action.payload],
       };
     case "SAVE_MESSAGE_FROM_NOTIFICATION": {
-      const { textMessage } = action.payload.body.messageData.textMessageData;
-      const { chatId } = action.payload.body.senderData;
-      const { sender } = action.payload.body.senderData;
+      const textMessage =
+        action.payload.body.messageData?.textMessageData?.textMessage ?? "";
+      const chatId = action.payload.body.senderData?.chatId ?? "";
+      const sender = action.payload.body.senderData?.sender ?? "";
 
       const isMessageExist = state.messages.some(
         (msg) =>
